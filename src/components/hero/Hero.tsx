@@ -118,7 +118,11 @@ export default function Hero() {
           </div>
         </div>
 
-        <div data-hero="visual" className="relative h-[420px] w-full sm:h-[520px] lg:h-[640px]">
+        {/* Desktop: the scene bleeds to the right edge of the viewport and fades in from the left, so no box edge is visible. */}
+        <div
+          data-hero="visual"
+          className="relative h-[420px] w-full sm:h-[520px] lg:absolute lg:inset-y-0 lg:right-0 lg:left-[50%] lg:h-auto lg:w-auto lg:[mask-image:linear-gradient(to_right,transparent,#000_16%)]"
+        >
           {mounted3D ? (
             <ErrorBoundary fallback={<HeroFallback />}>
               <Suspense fallback={<HeroFallback />}>

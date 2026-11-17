@@ -12,6 +12,9 @@ import { usePrefersReducedMotion } from '../../hooks/useMedia';
 
 type Vec3 = [number, number, number];
 
+/** Camera distance. Pulled back from 10 so the scene fits the wider, edge-to-edge hero area. */
+const HERO_CAMERA_Z = 15;
+
 const NODES: { id: string; label: string; pos: Vec3; color: string }[] = [
   { id: 'user', label: 'User', pos: [-4.4, 0.1, 0.4], color: '#e2e8f0' },
   { id: 'dns', label: 'DNS', pos: [-3.0, 1.5, -0.6], color: '#38bdf8' },
@@ -136,7 +139,7 @@ function Scene() {
     const t = state.clock.elapsedTime;
     state.camera.position.x = reduced ? 0 : Math.sin(t * 0.07) * 0.7;
     state.camera.position.y = reduced ? 0 : Math.sin(t * 0.05) * 0.4;
-    state.camera.position.z = 10;
+    state.camera.position.z = HERO_CAMERA_Z;
     state.camera.lookAt(0, 0, 0);
   });
 
@@ -203,7 +206,7 @@ export default function HeroScene() {
   return (
     <Canvas
       dpr={[1, 1.5]}
-      camera={{ position: [0, 0, 10], fov: 40 }}
+      camera={{ position: [0, 0, HERO_CAMERA_Z], fov: 40 }}
       gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
       aria-hidden="true"
       role="presentation"
