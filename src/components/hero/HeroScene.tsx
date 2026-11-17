@@ -1,7 +1,8 @@
 import { useMemo, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Float, Html, Line, Sparkles } from '@react-three/drei';
+import { Float, Html, Line, Sparkles, Stars } from '@react-three/drei';
 import * as THREE from 'three';
+import { usePrefersReducedMotion } from '../../hooks/useMedia';
 
 /**
  * Cloud infrastructure scene: a request path of connected nodes with data packets
@@ -35,6 +36,8 @@ const CLOUDS: { pos: Vec3; scale: number; speed: number }[] = [
   { pos: [-4.2, 2.4, -3.0], scale: 1.0, speed: 0.6 },
   { pos: [3.9, 2.5, -3.6], scale: 1.1, speed: 0.45 },
   { pos: [0.4, -3.0, -4.0], scale: 1.3, speed: 0.35 },
+  // Far background cloud: sits well behind the path to add depth.
+  { pos: [1.8, 4.2, -8.5], scale: 1.8, speed: 0.25 },
 ];
 
 function CloudBlob({ pos, scale, speed }: { pos: Vec3; scale: number; speed: number }) {
@@ -117,6 +120,7 @@ function Packet({ from, to, offset, speed, color }: { from: Vec3; to: Vec3; offs
 }
 
 function Scene() {
+  const reduced = usePrefersReducedMotion();
   const group = useRef<THREE.Group>(null);
   const pointer = useRef({ x: 0, y: 0 });
 
@@ -128,6 +132,12 @@ function Scene() {
       group.current.rotation.y = pointer.current.x * 0.35;
       group.current.rotation.x = -pointer.current.y * 0.18;
     }
+    // Slow camera drift for parallax depth. Frozen under reduced motion.
+    const t = state.clock.elapsedTime;
+    state.camera.position.x = reduced ? 0 : Math.sin(t * 0.07) * 0.7;
+    state.camera.position.y = reduced ? 0 : Math.sin(t * 0.05) * 0.4;
+    state.camera.position.z = 10;
+    state.camera.lookAt(0, 0, 0);
   });
 
   const edgePoints = useMemo(
@@ -179,7 +189,11 @@ function Scene() {
           )),
         )}
 
+        {/* Three depth layers of particles: distant dust, mid sparkles, near bokeh. */}
+        <Stars radius={30} depth={18} count={260} factor={2.5} saturation={0} fade speed={0.3} />
+        <Sparkles count={50} scale={[18, 9, 6]} position={[0, 0, -3]} size={1.4} speed={0.15} color="#93c5fd" opacity={0.45} />
         <Sparkles count={70} scale={[12, 6, 6]} size={2} speed={0.25} color="#93c5fd" opacity={0.6} />
+        <Sparkles count={14} scale={[9, 5, 3]} position={[0, 0, 3]} size={3.5} speed={0.35} color="#c4b5fd" opacity={0.35} />
       </group>
     </>
   );
@@ -188,7 +202,7 @@ function Scene() {
 export default function HeroScene() {
   return (
     <Canvas
-      dpr={[1, 1.6]}
+      dpr={[1, 1.5]}
       camera={{ position: [0, 0, 10], fov: 40 }}
       gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
       aria-hidden="true"

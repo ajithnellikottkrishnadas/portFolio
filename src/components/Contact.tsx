@@ -1,10 +1,13 @@
-import type { ReactNode } from 'react';
+import { lazy, type ReactNode } from 'react';
 import { Mail, MapPin, Phone } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './icons';
 import { profile } from '../config/profile';
 import SectionHeading from './SectionHeading';
 import Reveal from './Reveal';
 import ContactForm from './contact/ContactForm';
+import Lazy3D from './3d/Lazy3D';
+
+const StackScene = lazy(() => import('./contact/StackScene'));
 
 function CtaLink({ href, label, icon, sub }: { href: string; label: string; icon: ReactNode; sub: string }) {
   const base = 'glass flex items-center gap-4 rounded-2xl p-5 transition-colors';
@@ -68,6 +71,10 @@ export default function Contact() {
               <CtaLink href={profile.linkedin} label="LinkedIn" sub="Connect professionally" icon={<LinkedinIcon className="h-5 w-5" aria-hidden="true" />} />
               <CtaLink href={profile.github} label="GitHub" sub="Browse code" icon={<GithubIcon className="h-5 w-5" aria-hidden="true" />} />
             </div>
+
+            <Lazy3D className="mt-6 h-[220px]" fallback={null}>
+              <StackScene />
+            </Lazy3D>
           </div>
 
           <ContactForm />

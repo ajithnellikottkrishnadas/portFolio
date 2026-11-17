@@ -1,6 +1,21 @@
+import { lazy } from 'react';
 import { learningRoadmap } from '../config/profile';
 import SectionHeading from './SectionHeading';
 import Reveal from './Reveal';
+import Lazy3D from './3d/Lazy3D';
+
+const OrbitScene = lazy(() => import('./goals/OrbitScene'));
+
+/** Static stand-in for the orbit on mobile and reduced-motion devices. */
+function StaticOrbit() {
+  return (
+    <div className="relative mx-auto h-full w-full max-w-sm" aria-hidden="true">
+      <div className="absolute inset-[18%] rounded-full border border-sky-400/30" />
+      <div className="absolute inset-[6%] rounded-full border border-violet-400/25" />
+      <div className="absolute left-1/2 top-1/2 h-10 w-10 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br from-sky-400/40 to-violet-500/40 blur-[2px]" />
+    </div>
+  );
+}
 
 /**
  * Learning roadmap. Progress is shown as an animated "in progress" indicator rather than a
@@ -11,13 +26,18 @@ export default function Goals() {
     <section id="goals" aria-labelledby="goals-title" className="scroll-mt-24 py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Reveal className="grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
-          <SectionHeading eyebrow="07 — Career Goals" title="Always learning. Always building." id="goals-title">
-            <p>
-              I am continuously expanding my knowledge in cloud infrastructure and modern DevOps engineering. I aim to
-              contribute to engineering teams that build reliable, scalable, secure, and highly available technology
-              platforms.
-            </p>
-          </SectionHeading>
+          <div>
+            <SectionHeading eyebrow="07 — Career Goals" title="Always learning. Always building." id="goals-title">
+              <p>
+                I am continuously expanding my knowledge in cloud infrastructure and modern DevOps engineering. I aim to
+                contribute to engineering teams that build reliable, scalable, secure, and highly available technology
+                platforms.
+              </p>
+            </SectionHeading>
+            <Lazy3D className="mt-10 h-[340px]" fallback={<StaticOrbit />}>
+              <OrbitScene />
+            </Lazy3D>
+          </div>
 
           <div>
             <h3 className="mb-5 text-sm font-medium uppercase tracking-[0.18em] text-[var(--text-muted)]">Current learning focus</h3>

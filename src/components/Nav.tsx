@@ -64,12 +64,8 @@ export default function Nav() {
         }`}
       >
         <a href="#top" onClick={anchorClick('top')} className="flex items-center gap-2.5 rounded-lg">
-          <span
-            className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-sky-400 to-violet-500 font-mono text-xs font-bold text-white"
-            aria-hidden="true"
-          >
-            AN
-          </span>
+          <img src="/logo.svg" alt="" aria-hidden="true" className="h-10 w-10" />
+
           <span className="hidden text-sm font-medium text-[var(--text)] sm:inline">{profile.shortName}</span>
           <span className="visually-hidden">Back to top</span>
         </a>

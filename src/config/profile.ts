@@ -3,7 +3,7 @@
 
 export const profile = {
   name: 'Ajith Nellikott Krishnadas',
-  shortName: 'Ajith N.K.',
+  shortName: 'Ajith Nellikott',
   title: 'Cloud Infrastructure Engineer | AWS | Linux | DevOps | Kubernetes',
   intro:
     'Building, managing, and optimizing cloud infrastructure while exploring the intersection of automation, DevOps, and modern software engineering.',
@@ -99,12 +99,12 @@ export const skillCategories: SkillCategory[] = [
       { name: 'CloudWatch', status: 'professional' },
       { name: 'Server Patching', status: 'professional' },
       { name: 'Containerization', status: 'learning' },
-      { name: 'VPC', status: 'built' },
-      { name: 'Subnets', status: 'built' },
-      { name: 'Security Groups', status: 'built' },
+      { name: 'VPC', status: 'professional' },
+      { name: 'Subnets', status: 'professional' },
+      { name: 'Security Groups', status: 'professional' },
       { name: 'IAM', status: 'professional' },
       { name: 'AWS CLI', status: 'professional' },
-      { name: 'Systems Manager', status: 'built' },
+      { name: 'Systems Manager', status: 'professional' },
     ],
   },
   {
@@ -117,7 +117,7 @@ export const skillCategories: SkillCategory[] = [
       { name: 'Linux Commands', status: 'professional' },
       { name: 'Shell Fundamentals', status: 'built' },
       { name: 'Process Management', status: 'built' },
-      { name: 'User & Permission Management', status: 'built' },
+      { name: 'User & Permission Management', status: 'professional' },
       { name: 'TCP/IP', status: 'built' },
       { name: 'DNS', status: 'built' },
       { name: 'HTTP/HTTPS', status: 'built' },
@@ -137,7 +137,7 @@ export const skillCategories: SkillCategory[] = [
       { name: 'Kubernetes', status: 'learning' },
       { name: 'Terraform', status: 'learning' },
       { name: 'CI/CD Fundamentals', status: 'learning' },
-      { name: 'Infrastructure as Code', status: 'learning' },
+      { name: 'Infrastructure as Code', status: 'professional' },
       { name: 'Infrastructure Monitoring', status: 'professional' },
       { name: 'PowerShell', status: 'professional' },
       { name: 'Automation', status: 'professional' },
@@ -162,19 +162,19 @@ export const skillCategories: SkillCategory[] = [
     label: 'Programming & Development',
     accent: '#c084fc',
     skills: [
-      { name: 'JavaScript', status: 'built' },
-      { name: 'React.js', status: 'built' },
-      { name: 'Node.js', status: 'built' },
-      { name: 'Express.js', status: 'built' },
-      { name: 'MongoDB', status: 'built' },
-      { name: 'HTML5', status: 'built' },
-      { name: 'CSS3', status: 'built' },
-      { name: 'Bootstrap', status: 'built' },
-      { name: 'jQuery', status: 'built' },
-      { name: 'REST APIs', status: 'built' },
-      { name: 'Git', status: 'built' },
-      { name: 'GitHub', status: 'built' },
-      { name: 'Postman', status: 'built' },
+      { name: 'JavaScript', status: 'professional' },
+      { name: 'React.js', status: 'professional' },
+      { name: 'Node.js', status: 'professional' },
+      { name: 'Express.js', status: 'professional' },
+      { name: 'MongoDB', status: 'professional' },
+      { name: 'HTML5', status: 'professional' },
+      { name: 'CSS3', status: 'professional' },
+      { name: 'Bootstrap', status: 'professional' },
+      { name: 'jQuery', status: 'professional' },
+      { name: 'REST APIs', status: 'professional' },
+      { name: 'Git', status: 'professional' },
+      { name: 'GitHub', status: 'professional' },
+      { name: 'Postman', status: 'professional' },
       { name: 'Three.js', status: 'built' },
       { name: 'React Three Fiber', status: 'built' },
     ],
@@ -203,9 +203,26 @@ export const experience: ExperienceItem[] = [
     id: 'ust',
     company: 'UST',
     role: 'Cloud Engineer',
-    period: 'February 2026 – November 2026',
+    period: 'February 2026 – Present',
     project: 'Aptia Group',
-    tech: ['AWS', 'EC2', 'ECS', 'EBS', 'S3', 'Amazon FSx', 'CloudWatch', 'DFS', 'PowerShell', 'AWS CLI'],
+    tech: [
+      'AWS',
+      'EC2',
+      'ECS',
+      'EBS',
+      'S3',
+      'Amazon FSx',
+      'CloudWatch',
+      'DFS',
+      'PowerShell',
+      'AWS CLI',
+      'VPC',
+      'Subnets',
+      'Security Groups',
+      'Systems Manager',
+      'Linux User & Permission Management',
+      'Infrastructure as Code',
+    ],
     responsibilities: [
       'Managed and maintained AWS resources including EC2, ECS, EBS, S3, Amazon FSx, and CloudWatch.',
       'Supported server patching activities through scheduled maintenance windows.',
@@ -312,28 +329,52 @@ export const projects: ProjectItem[] = [
   },
 ];
 
-export const ecosystemNodes = [
-  { id: 'user', label: 'User', group: 'Client', tech: 'Browser / client' },
-  { id: 'dns', label: 'DNS', group: 'Edge', tech: 'Route 53 / DNS resolution' },
-  { id: 'lb', label: 'Load Balancer', group: 'Edge', tech: 'Traffic distribution' },
-  { id: 'app', label: 'Application', group: 'Compute', tech: 'Node.js / Express services' },
-  { id: 'containers', label: 'Containers', group: 'Compute', tech: 'Docker / Kubernetes' },
-  { id: 'database', label: 'Database', group: 'Data', tech: 'MongoDB' },
-  { id: 'storage', label: 'Storage', group: 'Data', tech: 'S3 / EBS / Amazon FSx' },
-  { id: 'monitoring', label: 'Monitoring', group: 'Operations', tech: 'CloudWatch' },
-] as const;
+export const ecosystemIntro =
+  'This portfolio is a React app built with Vite and served from an nginx container on AWS. Visitors reach it through Route 53 and an Application Load Balancer that handles HTTPS. The container runs on ECS Fargate, so there are no servers to manage. Each code change is built into a new container image, stored in ECR, and deployed automatically. The 3D scenes load only on capable desktops. Phones and reduced-motion visitors see a lighter version of the same content.';
 
-export const ecosystemDisclaimer =
-  'Illustrative reference architecture for learning and discussion. It does not represent a production system I deployed end-to-end. Technologies shown are those I have worked with or am studying.';
+export interface EcosystemStep {
+  id: string;
+  label: string;
+  tech: string;
+  /** Label on the arrow that enters this step (protocol or port), or null. */
+  arrow: string | null;
+}
+
+/** Visitor traffic only, top to bottom. The ECS task sits inside the VPC private subnets. */
+export const ecosystemRequestPath: EcosystemStep[] = [
+  { id: 'visitor', label: 'Visitor', tech: 'Opens the site over HTTPS; the React app loads in the browser', arrow: null },
+  { id: 'dns', label: 'Route 53', tech: 'Resolves the domain name to the load balancer', arrow: 'DNS 53' },
+  { id: 'alb', label: 'Application Load Balancer', tech: 'Terminates HTTPS with an ACM certificate, forwards on port 8080', arrow: 'HTTPS 443' },
+  { id: 'subnets', label: 'VPC private subnets', tech: 'Two Availability Zones; the container is not exposed directly', arrow: 'HTTP 8080' },
+  { id: 'ecs', label: 'ECS Fargate task', tech: 'nginx serves the static Vite build: HTML, JS and images', arrow: null },
+];
+
+export const ecosystemReleaseTitle = 'How updates ship — not on the visitor path';
+
+/** Release path, shown in its own row. */
+export const ecosystemReleasePath: EcosystemStep[] = [
+  { id: 'gha', label: 'GitHub Actions', tech: 'Builds the site and its Docker image on every push to main', arrow: null },
+  { id: 'ecr', label: 'Amazon ECR', tech: 'Stores each versioned image', arrow: 'docker push' },
+  { id: 'deploy', label: 'ECS Fargate', tech: 'Pulls the new image and replaces the running task', arrow: 'image pull' },
+];
+
+export const ecosystemMonitor = { id: 'monitor', label: 'CloudWatch', tech: 'Collects container logs and ALB health-check results' };
 
 export const ecosystemTech = [
-  'AWS',
-  'Linux',
+  'Route 53',
+  'ALB',
+  'ACM',
+  'VPC',
+  'ECS Fargate',
+  'nginx',
   'Docker',
-  'Kubernetes',
-  'Terraform',
-  'GitHub',
+  'ECR',
+  'GitHub Actions',
   'CloudWatch',
+  'IAM (OIDC)',
+  'Vite',
+  'React',
+  'TypeScript',
 ] as const;
 
 export const education = {
@@ -360,11 +401,12 @@ export const futureCertifications = [
 ];
 
 export const learningRoadmap = [
-  { id: 'linux', label: 'Advanced Linux Administration', stage: 'Active' },
-  { id: 'docker', label: 'Docker and Containerization', stage: 'Active' },
-  { id: 'k8s', label: 'Kubernetes and Container Orchestration', stage: 'Active' },
-  { id: 'tf', label: 'Terraform and Infrastructure as Code', stage: 'Active' },
-  { id: 'cicd', label: 'CI/CD Automation', stage: 'Planned' },
-  { id: 'aws-arch', label: 'AWS Architecture', stage: 'Active' },
-  { id: 'microservices', label: 'Microservices Deployment', stage: 'Planned' },
+  { id: 'linux', label: 'Advanced Linux Administration', short: 'Linux', stage: 'Active' },
+  { id: 'docker', label: 'Docker and Containerization', short: 'Docker', stage: 'Active' },
+  { id: 'k8s', label: 'Kubernetes and Container Orchestration', short: 'Kubernetes', stage: 'Active' },
+  { id: 'tf', label: 'Terraform and Infrastructure as Code', short: 'Terraform', stage: 'Active' },
+  { id: 'sysdesign', label: 'System Design', short: 'System Design', stage: 'Active' },
+  { id: 'cicd', label: 'CI/CD Automation', short: 'CI/CD', stage: 'Planned' },
+  { id: 'aws-arch', label: 'AWS Architecture', short: 'AWS Arch', stage: 'Active' },
+  { id: 'microservices', label: 'Microservices Deployment', short: 'Microservices', stage: 'Planned' },
 ] as const;
