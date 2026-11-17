@@ -54,11 +54,14 @@ export default function Nav() {
         scrolled ? 'py-3' : 'py-5'
       }`}
     >
+      {/* Centering wrapper: max width + auto margins + page gutters, so the bar is
+          symmetric on any screen width, including 27" and ultrawide monitors. */}
+      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
       <nav
         aria-label="Primary"
-        className={`mx-auto flex max-w-7xl items-center justify-between gap-4 rounded-2xl px-4 py-2.5 sm:px-5 ${
+        className={`flex items-center justify-between gap-4 rounded-2xl px-4 py-2.5 sm:px-5 ${
           scrolled ? 'glass' : 'border border-transparent'
-        } mx-4 sm:mx-6 lg:mx-8`}
+        }`}
       >
         <a href="#top" onClick={anchorClick('top')} className="flex items-center gap-2.5 rounded-lg">
           <span
@@ -115,7 +118,7 @@ export default function Nav() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.25 }}
-            className="glass mx-4 mt-2 rounded-2xl p-3 sm:mx-6 lg:hidden"
+            className="glass mt-2 rounded-2xl p-3 lg:hidden"
           >
             <ul className="grid gap-1">
               {navItems.map((item) => (
@@ -133,6 +136,7 @@ export default function Nav() {
           </motion.div>
         )}
       </AnimatePresence>
+      </div>
     </header>
   );
 }

@@ -134,7 +134,7 @@ export default function Experience() {
           </span>
           <ol ref={listRef} className="space-y-14">
             {experience.map((item, i) => (
-              <TimelineItem key={item.id} item={item} index={i} defaultOpen={i === 0} />
+              <TimelineItem key={item.id} item={item} index={i} defaultOpen />
             ))}
           </ol>
         </div>

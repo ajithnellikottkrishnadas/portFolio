@@ -14,8 +14,8 @@ export const profile = {
   email: 'ajithnellikottu@gmail.com',
   phone: '+91-85939-10902',
   // Fill these in. Empty values render as clearly marked "add link" states, never as dead buttons.
-  linkedin: '',
-  github: '',
+  linkedin: 'https://www.linkedin.com/in/ajith-nellikott-0b79b7195/',
+  github: 'https://github.com/ajithnellikottkrishnadas',
   resumePath: '/resume.pdf',
   siteUrl: 'https://example.com', // TODO: set to the real production URL (used for SEO / Open Graph)
 } as const;
@@ -36,6 +36,7 @@ export type SectionId = (typeof navItems)[number]['id'];
 export const aboutParagraphs = [
   'I am an engineering graduate and Cloud Infrastructure Engineer with professional experience supporting and maintaining AWS cloud environments.',
   'I have worked on production and non-production infrastructure, handling server maintenance, patching, monitoring, storage administration, troubleshooting, and operational activities.',
+  'I also have MERN stack development experience from an internship.',
   'My technical interests extend beyond cloud infrastructure into Linux administration, computer networking, DevOps practices, containerization, Kubernetes, and full-stack development.',
   'I enjoy understanding how systems work behind the scenes, solving infrastructure challenges, automating repetitive operations, and building scalable applications.',
   'My goal is to continuously develop my expertise in cloud engineering, infrastructure automation, and modern DevOps technologies.',
@@ -45,7 +46,7 @@ export const aboutCards = [
   {
     key: 'cloud',
     title: 'Cloud Infrastructure',
-    text: 'AWS compute, storage, networking and monitoring in production and non-production environments.',
+    text: 'Production and non-production AWS infrastructure: server maintenance, patching, monitoring, storage administration and troubleshooting.',
   },
   {
     key: 'linux',
@@ -96,6 +97,8 @@ export const skillCategories: SkillCategory[] = [
       { name: 'EBS', status: 'professional' },
       { name: 'Amazon FSx', status: 'professional' },
       { name: 'CloudWatch', status: 'professional' },
+      { name: 'Server Patching', status: 'professional' },
+      { name: 'Containerization', status: 'learning' },
       { name: 'VPC', status: 'built' },
       { name: 'Subnets', status: 'built' },
       { name: 'Security Groups', status: 'built' },
@@ -134,10 +137,8 @@ export const skillCategories: SkillCategory[] = [
       { name: 'Kubernetes', status: 'learning' },
       { name: 'Terraform', status: 'learning' },
       { name: 'CI/CD Fundamentals', status: 'learning' },
-      { name: 'Containerization', status: 'learning' },
       { name: 'Infrastructure as Code', status: 'learning' },
       { name: 'Infrastructure Monitoring', status: 'professional' },
-      { name: 'Server Patching', status: 'professional' },
       { name: 'PowerShell', status: 'professional' },
       { name: 'Automation', status: 'professional' },
     ],
@@ -174,6 +175,8 @@ export const skillCategories: SkillCategory[] = [
       { name: 'Git', status: 'built' },
       { name: 'GitHub', status: 'built' },
       { name: 'Postman', status: 'built' },
+      { name: 'Three.js', status: 'built' },
+      { name: 'React Three Fiber', status: 'built' },
     ],
   },
 ];
