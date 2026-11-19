@@ -1,0 +1,25 @@
+# services:
+#  portF-container:
+#      build: .
+#      image: nellikodan-portFolio-web:local
+#      ports:
+#          - "8080:8080"
+#      restart: unless-stopped
+#      healthcheck:
+#                test: ["CMD", "wget", "-qO-", "http://localhost:8080/health"]
+#                interval: 30s
+#                timeout: 30s
+#                retries: 3
+
+services:
+  portF-container:
+    build: .
+    image: nellikodan-portfolio-web:local
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
