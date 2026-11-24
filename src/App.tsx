@@ -14,6 +14,7 @@ import Education from './components/Education';
 import Goals from './components/Goals';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import MobileTouchPress from './mobile3d/MobileTouchPress';
 
 /** Keeps document-level SEO fields in sync with the profile config. */
 function useDocumentMeta() {
@@ -47,6 +48,7 @@ export default function App() {
     <SmoothScroll>
       <PageLoader />
       <CustomCursor />
+      <MobileTouchPress />
       <a
         href="#main"
         className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[110] focus:rounded-lg focus:bg-sky-500 focus:px-4 focus:py-2 focus:text-white"
