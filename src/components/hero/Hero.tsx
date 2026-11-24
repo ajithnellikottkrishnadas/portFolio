@@ -9,6 +9,7 @@ import MagneticButton from '../MagneticButton';
 import HeroFallback from './HeroFallback';
 import { useResumeDownload } from '../../hooks/useResumeDownload';
 import ErrorBoundary from '../ErrorBoundary';
+import MobileHeroCards from '../../mobile3d/MobileHeroCards';
 
 // The 3D bundle (three.js + R3F + drei) is split out and only fetched on capable desktops.
 const HeroScene = lazy(() => import('./HeroScene'));
@@ -118,9 +119,12 @@ export default function Hero() {
           </div>
         </div>
 
+        {/* Phones only: layered CSS 3D cards (renders nothing on desktop). */}
+        <MobileHeroCards />
         {/* Desktop: the scene bleeds to the right edge of the viewport and fades in from the left, so no box edge is visible. */}
         <div
           data-hero="visual"
+          data-desktop-3d
           className="relative h-[420px] w-full sm:h-[520px] lg:absolute lg:inset-y-0 lg:right-0 lg:left-[50%] lg:h-auto lg:w-auto lg:[mask-image:linear-gradient(to_right,transparent,#000_16%)]"
         >
           {mounted3D ? (

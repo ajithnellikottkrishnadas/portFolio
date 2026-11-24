@@ -144,7 +144,7 @@ export default function ContactForm() {
           onClick={copyEmail}
           className="rounded-full border border-white/15 px-5 py-3 text-sm text-[var(--text)] transition hover:border-sky-400/50"
         >
-          Copy email address
+          Copy email address to share
         </button>
       </div>
 

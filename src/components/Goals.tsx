@@ -3,6 +3,7 @@ import { learningRoadmap } from '../config/profile';
 import SectionHeading from './SectionHeading';
 import Reveal from './Reveal';
 import Lazy3D from './3d/Lazy3D';
+import MobileGoalsRing from '../mobile3d/MobileGoalsRing';
 
 const OrbitScene = lazy(() => import('./goals/OrbitScene'));
 
@@ -34,9 +35,14 @@ export default function Goals() {
                 platforms.
               </p>
             </SectionHeading>
-            <Lazy3D className="mt-10 h-[340px]" fallback={<StaticOrbit />}>
-              <OrbitScene />
-            </Lazy3D>
+            <div data-desktop-3d>
+              <Lazy3D className="mt-10 h-[340px]" fallback={<StaticOrbit />}>
+                <OrbitScene />
+              </Lazy3D>
+            </div>
+            <div className="mt-10">
+              <MobileGoalsRing />
+            </div>
           </div>
 
           <div>
