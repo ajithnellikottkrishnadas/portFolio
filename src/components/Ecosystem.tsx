@@ -207,7 +207,9 @@ export default function Ecosystem() {
               )}
             </div>
 
-            <MobileArchitecture />
+            <div className="relative">
+              <MobileArchitecture />
+            </div>
 
             <div className="relative mt-10 border-t border-white/10 pt-6">
               <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.2em] text-[var(--text-muted)]">Technologies in this area</p>

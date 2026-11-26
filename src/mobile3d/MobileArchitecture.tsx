@@ -4,32 +4,59 @@ import './mobile-architecture.css';
 
 type Group = 'Visitors' | 'Network' | 'Security' | 'Servers' | 'Updates' | 'Monitoring';
 type Flow = 'request' | 'release';
-type Part = { id: string; label: string; plain: string; tech: string; group: Group; layer: 0 | 1 | 2 | 3 };
+type Part = {
+  id: string;
+  label: string;
+  plain: string;
+  tech: string;
+  group: Group;
+  layer: 0 | 1 | 2 | 3;
+  links: string[];
+};
 
 const GROUPS: Group[] = ['Visitors', 'Network', 'Security', 'Servers', 'Updates', 'Monitoring'];
 const LETTERS = 'ABCD';
 const DEFAULT_EXPLODE = 30;
 
-/** Every component in the setup, with mobile-only plain-words copy. */
+/** Every component in the setup. `links` lists the parts it talks to, shown when it's tapped. */
 const PARTS: Part[] = [
-  { id: 'visitor', label: 'Visitor', plain: "Your browser asks for the site.", tech: 'Browser over HTTPS', group: 'Visitors', layer: 0 },
-  { id: 'godaddy', label: 'Domain registrar (GoDaddy)', plain: "Holds the domain name and points it to AWS's nameservers.", tech: 'Nameservers set to Route 53', group: 'Network', layer: 0 },
-  { id: 'github', label: 'GitHub', plain: 'Stores the code. Pushing a change here starts an automatic deploy.', tech: 'git push origin main', group: 'Updates', layer: 0 },
-  { id: 'route53', label: 'Route 53', plain: "The address book. It turns the domain name into the load balancer's address.", tech: 'DNS record, alias A', group: 'Network', layer: 1 },
-  { id: 'acm', label: 'ACM', plain: 'Encrypts the connection. The padlock in the browser comes from here.', tech: 'TLS certificate, HTTPS 443', group: 'Security', layer: 1 },
-  { id: 'cloudwatch', label: 'CloudWatch', plain: 'Records what the site does, so problems can be found.', tech: '/ecs/ANP-IN-WEB01', group: 'Monitoring', layer: 1 },
-  { id: 'ecr', label: 'ECR', plain: 'Stores the packaged version of the site.', tech: 'anp-in-ecr01', group: 'Updates', layer: 1 },
-  { id: 'iam', label: 'IAM', plain: 'Controls who may do what. GitHub gets temporary access only, with no stored keys.', tech: 'OIDC role ANP-IN-GHDEPLOY01', group: 'Security', layer: 1 },
-  { id: 'gha', label: 'GitHub Actions', plain: 'Checks the code, builds the image and pushes it to ECR.', tech: 'build-check, then deploy', group: 'Updates', layer: 1 },
-  { id: 'igw', label: 'Internet gateway', plain: 'The door between the internet and the network.', tech: 'ANP-IN-IGW01', group: 'Network', layer: 2 },
-  { id: 'alb', label: 'Application Load Balancer', plain: 'HTTPS on 443. Redirects HTTP to HTTPS. Shares visitors across the servers.', tech: 'ANP-IN-ALB01', group: 'Network', layer: 2 },
-  { id: 'tg', label: 'Target group', plain: 'The list of healthy servers the load balancer can send visitors to.', tech: 'ANP-IN-TG01, port 8080, /health', group: 'Network', layer: 2 },
-  { id: 'sg', label: 'Security groups', plain: 'Firewalls. The load balancer accepts web traffic; the servers accept traffic only from the load balancer.', tech: 'ANP-IN-ALBSG01, ANP-IN-ECSSG01', group: 'Security', layer: 2 },
-  { id: 'nat', label: 'NAT gateway', plain: 'Lets the servers download updates and images, while nothing from outside can reach them. Its public address is an Elastic IP.', tech: 'ANP-IN-NAT01, ANP-IN-EIP01', group: 'Network', layer: 3 },
-  { id: 'ecs', label: 'ECS task (Fargate)', plain: 'Runs the website in a container on port 8080 (nginx). Two copies run at all times.', tech: 'ANP-IN-SVC01, ANP-IN-TASK01', group: 'Servers', layer: 3 },
+  { id: 'visitor', label: 'Visitor', plain: 'Your browser asks for the site.', tech: 'Browser over HTTPS', group: 'Visitors', layer: 0, links: ['route53'] },
+  { id: 'godaddy', label: 'Domain registrar (GoDaddy)', plain: "Holds the domain name and points it to AWS's nameservers.", tech: 'Nameservers set to Route 53', group: 'Network', layer: 0, links: ['route53'] },
+  { id: 'github', label: 'GitHub', plain: 'Stores the code. Pushing a change here starts an automatic deploy.', tech: 'git push origin main', group: 'Updates', layer: 0, links: ['gha'] },
+  { id: 'route53', label: 'Route 53', plain: "The address book. It turns the domain name into the load balancer's address.", tech: 'DNS record, alias A', group: 'Network', layer: 1, links: ['visitor', 'godaddy', 'alb'] },
+  { id: 'acm', label: 'ACM', plain: 'Encrypts the connection. The padlock in the browser comes from here.', tech: 'TLS certificate, HTTPS 443', group: 'Security', layer: 1, links: ['alb'] },
+  { id: 'cloudwatch', label: 'CloudWatch', plain: 'Records what the site does, so problems can be found.', tech: '/ecs/ANP-IN-WEB01', group: 'Monitoring', layer: 1, links: ['ecs'] },
+  { id: 'ecr', label: 'ECR', plain: 'Stores the packaged version of the site.', tech: 'anp-in-ecr01', group: 'Updates', layer: 1, links: ['gha', 'ecs'] },
+  { id: 'iam', label: 'IAM', plain: 'Controls who may do what. GitHub gets temporary access only, with no stored keys.', tech: 'OIDC role ANP-IN-GHDEPLOY01', group: 'Security', layer: 1, links: ['gha', 'ecr'] },
+  { id: 'gha', label: 'GitHub Actions', plain: 'Checks the code, builds the image and pushes it to ECR.', tech: 'build-check, then deploy', group: 'Updates', layer: 1, links: ['github', 'iam', 'ecr'] },
+  { id: 'igw', label: 'Internet gateway', plain: 'The door between the internet and the network.', tech: 'ANP-IN-IGW01', group: 'Network', layer: 2, links: ['alb'] },
+  { id: 'alb', label: 'Application Load Balancer', plain: 'HTTPS on 443. Redirects HTTP to HTTPS. Shares visitors across the servers.', tech: 'ANP-IN-ALB01', group: 'Network', layer: 2, links: ['igw', 'acm', 'tg', 'sg'] },
+  { id: 'tg', label: 'Target group', plain: 'The list of healthy servers the load balancer can send visitors to.', tech: 'ANP-IN-TG01, port 8080, /health', group: 'Network', layer: 2, links: ['alb', 'ecs'] },
+  { id: 'sg', label: 'Security groups', plain: 'Firewalls. The load balancer accepts web traffic; the servers accept traffic only from the load balancer.', tech: 'ANP-IN-ALBSG01, ANP-IN-ECSSG01', group: 'Security', layer: 2, links: ['alb', 'ecs'] },
+  { id: 'nat', label: 'NAT gateway', plain: 'Lets the servers download updates and images, while nothing from outside can reach them. Its public address is an Elastic IP.', tech: 'ANP-IN-NAT01, ANP-IN-EIP01', group: 'Network', layer: 3, links: ['ecs', 'igw'] },
+  { id: 'ecs', label: 'ECS task (Fargate)', plain: 'Runs the website in a container on port 8080 (nginx). Two copies run at all times.', tech: 'ANP-IN-SVC01, ANP-IN-TASK01', group: 'Servers', layer: 3, links: ['tg', 'ecr', 'nat', 'cloudwatch', 'sg'] },
 ];
 
 const BY_ID: Record<string, Part> = Object.fromEntries(PARTS.map((p) => [p.id, p]));
+
+/** The plain-language connections, in the order a person would follow them. */
+const CONNECTIONS: { from: string; to: string; why: string }[] = [
+  { from: 'Visitor', to: 'Route 53', why: 'Looks up the domain name' },
+  { from: 'Route 53', to: 'Internet gateway', why: 'Sends the visitor into the VPC' },
+  { from: 'Internet gateway', to: 'Load balancer', why: 'Passes the request to the load balancer' },
+  { from: 'ACM certificate', to: 'Load balancer', why: 'Encrypts HTTPS on port 443' },
+  { from: 'Load balancer', to: 'Target group', why: 'Chooses only healthy tasks' },
+  { from: 'Target group', to: 'ECS task in zone A or B', why: 'Sends the request to a task' },
+  { from: 'Security group (ALB)', to: 'Load balancer', why: 'Allows web traffic in on 80 and 443' },
+  { from: 'Security group (ECS)', to: 'ECS task', why: 'Allows port 8080 only from the load balancer' },
+  { from: 'ECS task (private subnet)', to: 'NAT gateway (zone A)', why: 'Sends out requests for updates and images' },
+  { from: 'NAT gateway', to: 'Internet gateway', why: 'Gives the tasks a route out to the internet' },
+  { from: 'GitHub', to: 'GitHub Actions', why: 'Runs the checks and build on push' },
+  { from: 'GitHub Actions', to: 'ECR', why: 'Uploads the new image' },
+  { from: 'IAM role', to: 'GitHub Actions', why: 'Gives the workflow temporary access' },
+  { from: 'ECR', to: 'ECS task', why: 'The task pulls its image from here' },
+  { from: 'ECS task', to: 'CloudWatch', why: 'Sends logs and health results' },
+];
 
 const LAYERS: { title: string; sub: string }[] = [
   { title: 'Outside the AWS account', sub: 'The visitor, the domain and the code' },
@@ -78,8 +105,8 @@ function Chip({ part, active, dim, onPick }: { part: Part; active: boolean; dim:
 }
 
 /**
- * Mobile architecture: layered model, two flows, tap-to-inspect, drag and inertia, and a full overview.
- * Renders only below 900px. The 3D view is aria-hidden; the overview and step lists carry the content.
+ * Mobile architecture: layered model, two flows, connections, tap-to-inspect and an overview.
+ * Renders only below 900px. The 3D model is decorative for screen readers; the lists carry the content.
  */
 export default function MobileArchitecture() {
   const isMobile = useIsMobile();
@@ -92,9 +119,9 @@ export default function MobileArchitecture() {
   const [rot, setRot] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
   const [showTech, setShowTech] = useState(false);
+  const [showConnections, setShowConnections] = useState(false);
 
-  // Drag state: horizontal drag turns the model, vertical drag separates the layers.
-  const drag = useRef<{ x: number; y: number; rot: number; explode: number; lastX: number; vel: number } | null>(null);
+  const drag = useRef<{ x: number; rot: number; lastX: number; vel: number } | null>(null);
   const spin = useRef<number | null>(null);
 
   const steps = flow === 'request' ? REQUEST_STEPS : RELEASE_STEPS;
@@ -112,7 +139,6 @@ export default function MobileArchitecture() {
     if (index >= steps.length - 1) setPlaying(false);
   }, [index, steps.length]);
 
-  // Inertia: after a horizontal flick, the model keeps turning and slows down.
   useEffect(() => {
     return () => {
       if (spin.current !== null) cancelAnimationFrame(spin.current);
@@ -120,6 +146,11 @@ export default function MobileArchitecture() {
   }, []);
 
   if (!isMobile) return null;
+
+  const stopSpin = () => {
+    if (spin.current !== null) cancelAnimationFrame(spin.current);
+    spin.current = null;
+  };
 
   const switchFlow = (next: Flow) => {
     setFlow(next);
@@ -139,37 +170,34 @@ export default function MobileArchitecture() {
     setIndex(Math.max(0, Math.min(i, steps.length - 1)));
     setSelected(null);
     setShowTech(false);
+    setPlaying(false);
+  };
+
+  const resetView = () => {
+    stopSpin();
+    setRot(0);
+    setExplode(DEFAULT_EXPLODE);
   };
 
   const dimmed = (p: Part) => filter !== 'All' && p.group !== filter;
 
-  const stopSpin = () => {
-    if (spin.current !== null) cancelAnimationFrame(spin.current);
-    spin.current = null;
-  };
-
+  // Horizontal drag turns the model. The page still scrolls vertically (touch-action: pan-y).
   const onDown = (e: PointerEvent<HTMLDivElement>) => {
     stopSpin();
-    drag.current = { x: e.clientX, y: e.clientY, rot, explode, lastX: e.clientX, vel: 0 };
+    drag.current = { x: e.clientX, rot, lastX: e.clientX, vel: 0 };
     e.currentTarget.setPointerCapture(e.pointerId);
   };
-
   const onMove = (e: PointerEvent<HTMLDivElement>) => {
     const d = drag.current;
     if (!d) return;
-    const dx = e.clientX - d.x;
-    const dy = e.clientY - d.y;
     d.vel = e.clientX - d.lastX;
     d.lastX = e.clientX;
-    setRot(Math.max(-40, Math.min(40, d.rot + dx * 0.25)));
-    setExplode(Math.max(0, Math.min(100, d.explode - dy * 0.2)));
+    setRot(Math.max(-40, Math.min(40, d.rot + (e.clientX - d.x) * 0.25)));
   };
-
   const onUp = () => {
     const d = drag.current;
     drag.current = null;
     if (!d || reduced) return;
-    // Inertia: keep turning in the flick direction, slowing each frame.
     let v = d.vel * 0.25;
     const tick = () => {
       v *= 0.92;
@@ -183,22 +211,15 @@ export default function MobileArchitecture() {
     if (Math.abs(v) > 0.05) spin.current = requestAnimationFrame(tick);
   };
 
-  const resetView = () => {
-    stopSpin();
-    setRot(0);
-    setExplode(DEFAULT_EXPLODE);
-  };
-
   const shownPart = selected ? BY_ID[selected] : BY_ID[current.part];
   const shownText = selected ? BY_ID[selected].plain : current.text;
   const stepLabel = flow === 'request' ? `Step ${index + 1} of ${steps.length}` : `Step ${LETTERS[index]} of ${steps.length}`;
   const lift = explode * 0.5;
-
-  const layerChips = (n: number) => PARTS.filter((p) => p.layer === n);
+  const gap = explode * 0.12;
 
   return (
     <div className={`m-arch${playing ? ' is-playing' : ''}`}>
-      <p className="m-arch-intro">Follow one visit, or one update, through the cloud. Tap any box to see what it does.</p>
+      <p className="m-arch-intro">Follow one visit, or one update, through the cloud. Tap any box to see what it connects to.</p>
 
       <div className="m-arch-row" role="group" aria-label="Choose a flow">
         <button type="button" className="m-arch-btn" aria-pressed={flow === 'request'} onClick={() => switchFlow('request')}>
@@ -220,21 +241,13 @@ export default function MobileArchitecture() {
         ))}
       </div>
 
-      {/* The 3D model is decorative for screen readers: the overview and step cards carry the content. */}
-      <div
-        className="m-arch-stage"
-        aria-hidden="true"
-        onPointerDown={onDown}
-        onPointerMove={onMove}
-        onPointerUp={onUp}
-        onPointerCancel={onUp}
-      >
+      <div className="m-arch-stage" aria-hidden="true" onPointerDown={onDown} onPointerMove={onMove} onPointerUp={onUp} onPointerCancel={onUp}>
         <div className="m-arch-scene" style={{ transform: `rotateX(18deg) rotateY(${rot}deg)` }}>
           {LAYERS.map((layer, n) => (
-            <div key={layer.title}>
+            <div key={layer.title} className="m-arch-slot" style={{ marginTop: n === 0 ? 0 : gap }}>
               {n > 0 && <div className="m-arch-link" />}
               <div
-                className={`m-arch-layer m-arch-layer-${n}${PARTS.some((p) => p.layer === n && p.id === activeId) ? ' is-active' : ''}`}
+                className={`m-arch-layer${PARTS.some((p) => p.layer === n && p.id === activeId) ? ' is-active' : ''}`}
                 style={{ transform: `translateZ(${(3 - n) * lift}px)` }}
               >
                 <div className="m-arch-head">
@@ -264,7 +277,7 @@ export default function MobileArchitecture() {
                   </div>
                 ) : (
                   <div className="m-arch-chips">
-                    {layerChips(n).map((p) => (
+                    {PARTS.filter((p) => p.layer === n).map((p) => (
                       <Chip key={p.id} part={p} active={activeId === p.id} dim={dimmed(p)} onPick={pick} />
                     ))}
                   </div>
@@ -274,7 +287,7 @@ export default function MobileArchitecture() {
           ))}
         </div>
       </div>
-      <p className="m-arch-hint">Drag sideways to turn the model. Drag up or down to separate the layers.</p>
+      <p className="m-arch-hint">Drag sideways to turn the model. Use the slider to pull the layers apart.</p>
 
       <div className="m-arch-controls">
         <label className="m-arch-slider">
@@ -287,7 +300,6 @@ export default function MobileArchitecture() {
       </div>
 
       {reduced ? (
-        /* Reduced motion: the flows as plain numbered lists, with no animation. */
         <div className="m-arch-static">
           <p className="m-arch-step">Visitor request</p>
           <ol>
@@ -312,6 +324,20 @@ export default function MobileArchitecture() {
               {showTech ? 'Hide technical name' : 'Show technical name'}
             </button>
             {showTech && <p className="m-arch-tech">{shownPart.tech}</p>}
+            {selected && (
+              <div className="m-arch-links">
+                <p className="m-arch-step">Connected to</p>
+                <ul>
+                  {BY_ID[selected].links.map((id) => (
+                    <li key={id}>
+                      <button type="button" className="m-arch-linkbtn" onClick={() => pick(id)}>
+                        {BY_ID[id].label}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
             {selected ? (
               <button type="button" className="m-arch-btn" onClick={() => setSelected(null)}>
                 Back to the flow
@@ -347,6 +373,24 @@ export default function MobileArchitecture() {
           </div>
         </>
       )}
+
+      <section className="m-arch-connections" aria-label="How the services connect">
+        <button type="button" className="m-arch-btn" aria-expanded={showConnections} onClick={() => setShowConnections((v) => !v)}>
+          {showConnections ? 'Hide how they connect' : 'How they connect'}
+        </button>
+        {showConnections && (
+          <ol>
+            {CONNECTIONS.map((c) => (
+              <li key={`${c.from}-${c.to}`}>
+                <strong>
+                  {c.from} → {c.to}
+                </strong>
+                <span>{c.why}</span>
+              </li>
+            ))}
+          </ol>
+        )}
+      </section>
 
       <section className="m-arch-overview" aria-label="Everything in the architecture">
         <h4>Overview</h4>
