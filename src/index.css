@@ -83,6 +83,46 @@ body {
   box-shadow: var(--shadow-deep), inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
+/* Phones and tablets (below 1024px, where the menu button shows). Desktop keeps the standard .glass values above.
+   Backgrounds are near-opaque by default, so text stays readable when a browser ignores backdrop-filter. */
+@media (max-width: 1023px) {
+  /* Header bar once scrolled: softer, more blur, 88% base colour. */
+  .nav-scrolled {
+    background-color: rgba(5, 8, 22, 0.88);
+  }
+  @supports (backdrop-filter: blur(1px)) {
+    .nav-scrolled {
+      backdrop-filter: blur(20px) saturate(140%);
+      -webkit-backdrop-filter: blur(20px) saturate(140%);
+    }
+  }
+
+  /* Open menu panel: 94% base colour, border and shadow so it stands apart from the page. */
+  .mobile-menu-panel {
+    background-color: rgba(5, 8, 22, 0.94);
+    background-color: color-mix(in srgb, var(--bg) 94%, transparent);
+    border: 1px solid rgba(148, 163, 255, 0.22);
+    box-shadow: 0 24px 60px -18px rgba(2, 6, 23, 0.95), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+  @supports (backdrop-filter: blur(1px)) {
+    .mobile-menu-panel {
+      backdrop-filter: blur(24px) saturate(140%);
+      -webkit-backdrop-filter: blur(24px) saturate(140%);
+    }
+  }
+
+  /* Full-screen dim behind the open menu. It blurs the page too, where supported. Tapping it closes the menu. */
+  .mobile-menu-overlay {
+    background-color: rgba(2, 4, 12, 0.45);
+  }
+  @supports (backdrop-filter: blur(1px)) {
+    .mobile-menu-overlay {
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+  }
+}
+
 .text-gradient {
   background: linear-gradient(100deg, #e8edf9 10%, #7dd3fc 45%, #c4b5fd 90%);
   -webkit-background-clip: text;

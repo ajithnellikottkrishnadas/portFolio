@@ -1,0 +1,327 @@
+/* Mobile architecture. Every rule sits inside the phone and tablet query, so desktop is unaffected. */
+@media (max-width: 899px) {
+  .m-arch {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .m-arch-intro {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+
+  .m-arch-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .m-arch-btn {
+    min-height: 2.75rem;
+    padding: 0.5rem 0.9rem;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--text);
+    font-size: 0.875rem;
+    cursor: pointer;
+  }
+  .m-arch-btn[aria-pressed='true'] {
+    background: linear-gradient(90deg, rgba(56, 189, 248, 0.85), rgba(139, 92, 246, 0.85));
+    color: #fff;
+    border-color: transparent;
+  }
+  .m-arch-btn:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+
+  .m-arch-stage {
+    perspective: 1100px;
+    touch-action: none;
+    cursor: grab;
+    padding: 0.5rem 0;
+  }
+  .m-arch-hint {
+    margin: -0.5rem 0 0;
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+  }
+
+  .m-arch-static {
+    display: grid;
+    gap: 0.6rem;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1rem;
+  }
+  .m-arch-static ol {
+    margin: 0;
+    padding-left: 1.25rem;
+    display: grid;
+    gap: 0.4rem;
+    color: var(--text-muted);
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+
+  .m-arch-scene {
+    transform-style: preserve-3d;
+    transition: transform 0.35s ease;
+    display: grid;
+    gap: 0;
+  }
+
+  .m-arch-layer {
+    position: relative;
+    border: 1px solid rgba(148, 163, 255, 0.22);
+    background: rgba(10, 16, 34, 0.9);
+    border-radius: 16px;
+    padding: 0.875rem;
+    box-shadow: 0 18px 40px -20px rgba(2, 6, 23, 0.9);
+    transition: transform 0.45s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    min-width: 0;
+  }
+  .m-arch-layer.is-active {
+    border-color: rgba(56, 189, 248, 0.55);
+    box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.25), 0 18px 40px -20px rgba(2, 6, 23, 0.9);
+  }
+
+  .m-arch-head {
+    margin-bottom: 0.6rem;
+  }
+  .m-arch-title {
+    margin: 0;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--text);
+    overflow-wrap: anywhere;
+  }
+  .m-arch-sub {
+    margin: 0.15rem 0 0;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  .m-arch-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .m-arch-chip {
+    min-height: 2.75rem;
+    padding: 0.45rem 0.7rem;
+    border-radius: 0.75rem;
+    border: 1px solid;
+    font-size: 0.8125rem;
+    text-align: left;
+    overflow-wrap: anywhere;
+    cursor: pointer;
+    transition: opacity 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .m-arch-chip.is-active {
+    transform: translateZ(18px);
+    box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.6), 0 10px 20px -8px rgba(56, 189, 248, 0.5);
+  }
+  .m-arch-chip.is-dim {
+    opacity: 0.3;
+  }
+
+  .m-arch-zones {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+  .m-arch-zone {
+    border: 1px dashed rgba(148, 163, 255, 0.3);
+    border-radius: 12px;
+    padding: 0.5rem;
+    display: grid;
+    gap: 0.4rem;
+    min-width: 0;
+  }
+  .m-arch-zone-title {
+    margin: 0;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+  .m-arch-subnet {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 0.4rem;
+    display: grid;
+    gap: 0.35rem;
+    min-width: 0;
+  }
+  .m-arch-subnet-name {
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+  }
+  .m-arch-note {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  .m-arch-link {
+    width: 2px;
+    height: 1.1rem;
+    margin: 0 auto;
+    background: linear-gradient(to bottom, transparent, #38bdf8, #a78bfa, transparent);
+    background-size: 100% 200%;
+    opacity: 0.5;
+  }
+  .m-arch.is-playing .m-arch-link {
+    opacity: 1;
+    animation: m-arch-flow 1.6s linear infinite;
+  }
+  @keyframes m-arch-flow {
+    from {
+      background-position: 0 200%;
+    }
+    to {
+      background-position: 0 -100%;
+    }
+  }
+
+  .m-arch-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .m-arch-slider {
+    display: grid;
+    gap: 0.35rem;
+    flex: 1 1 14rem;
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+  }
+  .m-arch-slider input {
+    width: 100%;
+    min-height: 2.75rem;
+    accent-color: #38bdf8;
+  }
+
+  .m-arch-card {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    display: grid;
+    gap: 0.6rem;
+  }
+  .m-arch-step {
+    margin: 0;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #7dd3fc;
+  }
+  .m-arch-card h3 {
+    margin: 0;
+    font-size: 1.125rem;
+    color: var(--text);
+    overflow-wrap: anywhere;
+  }
+  .m-arch-card p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+  .m-arch-tech {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem !important;
+    color: var(--text) !important;
+    overflow-wrap: anywhere;
+  }
+  .m-arch-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .m-arch-dots {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.25rem;
+  }
+  .m-arch-dot {
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+    display: grid;
+    place-items: center;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+  }
+  .m-arch-dot span {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.25);
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .m-arch-dot span.is-on {
+    background: linear-gradient(90deg, #38bdf8, #a78bfa);
+    transform: scale(1.3);
+  }
+
+  .m-arch-overview {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 1rem;
+    display: grid;
+    gap: 0.9rem;
+  }
+  .m-arch-overview h4 {
+    margin: 0;
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--text-muted);
+  }
+  .m-arch-group-title {
+    margin: 0 0 0.35rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .m-arch-overview ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+  .m-arch-overview li {
+    display: grid;
+    gap: 0.1rem;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+  }
+  .m-arch-overview li strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .m-arch-scene,
+    .m-arch-layer,
+    .m-arch-chip,
+    .m-arch-dot span,
+    .m-arch-link {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+}

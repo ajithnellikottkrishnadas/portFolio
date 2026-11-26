@@ -13,7 +13,7 @@ import { use3DEnabled } from '../hooks/useMedia';
 import SectionHeading from './SectionHeading';
 import Reveal from './Reveal';
 import TiltCard from './TiltCard';
-import MobileEcosystemStack from '../mobile3d/MobileEcosystemStack';
+import MobileArchitecture from '../mobile3d/MobileArchitecture';
 import Lazy3D from './3d/Lazy3D';
 
 // The 3D diagram (three.js + R3F + drei) is split out and only fetched on capable desktops.
@@ -194,7 +194,7 @@ export default function Ecosystem() {
         <TiltCard className="mt-10 lg:mt-14" maxTilt={3}>
           <div className="glass relative overflow-hidden rounded-2xl p-[var(--m-card-p)] md:p-10">
             <div className="grid-bg absolute inset-0 opacity-60" aria-hidden="true" />
-            <div className="relative" data-desktop-3d>
+            <div className="relative max-[899px]:hidden" data-desktop-3d>
               {use3D ? (
                 <>
                   <SrSummary />
@@ -207,7 +207,7 @@ export default function Ecosystem() {
               )}
             </div>
 
-            <MobileEcosystemStack />
+            <MobileArchitecture />
 
             <div className="relative mt-10 border-t border-white/10 pt-6">
               <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.2em] text-[var(--text-muted)]">Technologies in this area</p>

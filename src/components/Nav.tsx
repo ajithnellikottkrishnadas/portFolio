@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { Menu, X } from 'lucide-react';
 import { navItems, profile, type SectionId } from '../config/profile';
 import { anchorClick } from './SmoothScroll';
@@ -8,6 +8,7 @@ export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<SectionId | null>(null);
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -59,8 +60,8 @@ export default function Nav() {
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
       <nav
         aria-label="Primary"
-        className={`flex items-center justify-between gap-4 rounded-2xl px-4 py-2.5 sm:px-5 ${
-          scrolled ? 'glass' : 'border border-transparent'
+        className={`flex items-center justify-between gap-4 rounded-2xl px-4 py-2.5 sm:px-5 max-lg:relative max-lg:z-50 ${
+          scrolled ? 'glass nav-scrolled' : 'border border-transparent'
         }`}
       >
         <a href="#top" onClick={anchorClick('top')} className="flex min-h-11 items-center gap-2.5 rounded-lg">
@@ -109,12 +110,29 @@ export default function Nav() {
       <AnimatePresence>
         {open && (
           <motion.div
+            key="mobile-menu-overlay"
+            aria-hidden="true"
+            onClick={() => setOpen(false)}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: reduceMotion ? 0 : 0.2, ease: 'easeOut' }}
+            className="mobile-menu-overlay fixed inset-0 z-40 lg:hidden"
+          />
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            key="mobile-menu"
             id="mobile-menu"
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.25 }}
-            className="glass mt-2 rounded-2xl p-3 lg:hidden"
+            initial={reduceMotion ? false : { opacity: 0, scale: 0.97, y: -6 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.97, y: -6 }}
+            transition={{ duration: reduceMotion ? 0 : 0.2, ease: 'easeOut' }}
+            style={{ transformOrigin: 'top center' }}
+            className="glass mobile-menu-panel relative z-50 mt-2 rounded-2xl p-3 lg:hidden"
           >
             <ul className="grid gap-1">
               {navItems.map((item) => (
