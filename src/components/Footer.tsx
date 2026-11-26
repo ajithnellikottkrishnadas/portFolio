@@ -8,7 +8,7 @@ export default function Footer() {
         <p>
           © {new Date().getFullYear()} {profile.name}. Built with React, Three.js and GSAP.
         </p>
-        <a href="#top" onClick={anchorClick('top')} className="inline-flex items-center gap-2 hover:text-sky-300">
+        <a href="#top" onClick={anchorClick('top')} className="inline-flex min-h-11 items-center gap-2 hover:text-sky-300">
           Back to top
         </a>
       </div>

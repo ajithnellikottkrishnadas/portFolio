@@ -1,0 +1,66 @@
+/*
+  Responsive tokens for phones and tablets.
+  Every value sits inside max-width: 1023px, so desktop (1024px and up) never reads them.
+  Components use these variables only with an lg: override for desktop, so desktop keeps its original classes.
+
+  Tiers (by viewport width):
+    XS      below 360px   small phones
+    SM      360-389px     Galaxy A series, iPhone SE
+    MD      390-411px     iPhone 14 and 15
+    LG      412-599px     large phones such as Galaxy S25 Ultra (412 x 915)
+    TABLET  600-1023px    tablets and small laptops
+  Tall phones (width divided by height at most 9/19) get extra vertical room.
+*/
+
+@media (max-width: 1023px) {
+  :root {
+    /* XS defaults */
+    --m-section-y: 4rem;
+    --m-card-p: 1rem;
+    --m-visual-h: 260px;
+    --m-orbit-h: 220px;
+  }
+
+  @media (min-width: 360px) {
+    :root {
+      --m-section-y: 4.25rem;
+      --m-card-p: 1.125rem;
+      --m-visual-h: 300px;
+      --m-orbit-h: 240px;
+    }
+  }
+
+  @media (min-width: 390px) {
+    :root {
+      --m-section-y: 4.5rem;
+      --m-card-p: 1.25rem;
+      --m-visual-h: 340px;
+      --m-orbit-h: 260px;
+    }
+  }
+
+  @media (min-width: 412px) {
+    :root {
+      --m-section-y: 5rem;
+      --m-card-p: 1.5rem;
+      --m-visual-h: 380px;
+      --m-orbit-h: 280px;
+    }
+  }
+
+  /* Tall phones: width divided by height is at most 9/19, so add breathing room. */
+  @media (min-width: 390px) and (max-aspect-ratio: 9/19) {
+    :root {
+      --m-section-y: 5.75rem;
+    }
+  }
+
+  @media (min-width: 600px) {
+    :root {
+      --m-section-y: 6rem;
+      --m-card-p: 1.75rem;
+      --m-visual-h: 440px;
+      --m-orbit-h: 300px;
+    }
+  }
+}

@@ -63,7 +63,7 @@ export default function Nav() {
           scrolled ? 'glass' : 'border border-transparent'
         }`}
       >
-        <a href="#top" onClick={anchorClick('top')} className="flex items-center gap-2.5 rounded-lg">
+        <a href="#top" onClick={anchorClick('top')} className="flex min-h-11 items-center gap-2.5 rounded-lg">
           <img src="/logo.svg" alt="" aria-hidden="true" className="h-10 w-10" />
 
           <span className="hidden text-sm font-medium text-[var(--text)] sm:inline">{profile.shortName}</span>
@@ -96,7 +96,7 @@ export default function Nav() {
 
         <button
           type="button"
-          className="glass grid h-10 w-10 place-items-center rounded-xl lg:hidden"
+          className="glass grid h-11 w-11 place-items-center rounded-xl lg:hidden"
           aria-expanded={open}
           aria-controls="mobile-menu"
           aria-label={open ? 'Close menu' : 'Open menu'}

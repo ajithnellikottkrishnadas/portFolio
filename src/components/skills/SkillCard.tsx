@@ -25,7 +25,7 @@ export default function SkillCard({ category }: { category: SkillCategory }) {
       className="h-full"
     >
       <TiltCard className="h-full" maxTilt={6}>
-        <article className="glass flex h-full flex-col rounded-2xl p-6">
+        <article className="glass flex h-full flex-col rounded-2xl p-[var(--m-card-p)] lg:p-6">
           <div className="mb-5 flex items-center justify-between gap-3">
             <h3 className="text-lg font-semibold text-[var(--text)]">{category.label}</h3>
             <span

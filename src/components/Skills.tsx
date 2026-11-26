@@ -28,7 +28,7 @@ export default function Skills() {
   ];
 
   return (
-    <section id="skills" aria-labelledby="skills-title" className="scroll-mt-24 py-24 md:py-32">
+    <section id="skills" aria-labelledby="skills-title" className="scroll-mt-24 py-[var(--m-section-y)] lg:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Reveal>
           <SectionHeading
@@ -53,7 +53,7 @@ export default function Skills() {
                   type="button"
                   aria-pressed={on}
                   onClick={() => setFilter(f.id)}
-                  className={`relative rounded-full px-4 py-2 text-sm transition-colors ${
+                  className={`relative inline-flex min-h-11 items-center rounded-full px-4 py-2 text-sm transition-colors ${
                     on ? 'text-white' : 'text-[var(--text-muted)] hover:text-[var(--text)]'
                   }`}
                 >
@@ -80,7 +80,7 @@ export default function Skills() {
           </ul>
         </div>
 
-        <motion.div layout className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+        <motion.div layout className="mt-10 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
           <AnimatePresence mode="popLayout">
             {visible.map((category) => (
               <SkillCard key={category.id} category={category} />

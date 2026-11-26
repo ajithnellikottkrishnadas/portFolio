@@ -20,7 +20,7 @@ const accents: Record<string, string> = {
 
 export default function About() {
   return (
-    <section id="about" aria-labelledby="about-title" className="scroll-mt-24 py-24 md:py-32">
+    <section id="about" aria-labelledby="about-title" className="scroll-mt-24 py-[var(--m-section-y)] lg:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Reveal className="grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
           <div>
@@ -33,12 +33,12 @@ export default function About() {
           </div>
         </Reveal>
 
-        <Reveal stagger className="mt-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <Reveal stagger className="mt-12 lg:mt-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {aboutCards.map((card) => {
             const Icon = icons[card.key];
             return (
               <TiltCard key={card.key} className="h-full" maxTilt={10}>
-                <article className="glass h-full rounded-2xl p-6">
+                <article className="glass h-full rounded-2xl p-[var(--m-card-p)] lg:p-6">
                   <div className="relative mb-6 h-20 w-20 [transform-style:preserve-3d]" aria-hidden="true">
                     <div
                       className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${accents[card.key]} border border-white/10 [transform:rotateX(55deg)_rotateZ(-30deg)_translateZ(6px)] shadow-[0_18px_30px_-12px_rgba(56,189,248,0.4)]`}

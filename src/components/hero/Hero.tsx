@@ -47,7 +47,7 @@ export default function Hero() {
       ref={rootRef}
       id="top"
       aria-labelledby="hero-title"
-      className="relative isolate flex min-h-[100svh] items-center overflow-hidden pt-28 pb-16"
+      className="relative isolate flex min-h-[100svh] supports-[height:100dvh]:min-h-[100dvh] items-center overflow-hidden pt-24 pb-12 md:pt-28 md:pb-16"
     >
       <div className="grid-bg absolute inset-0 -z-10 opacity-70" aria-hidden="true" />
       <div
@@ -55,7 +55,7 @@ export default function Hero() {
         aria-hidden="true"
       />
 
-      <div className="mx-auto grid w-full max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-[1.05fr_1fr] lg:gap-6 lg:px-8">
+      <div className="mx-auto grid w-full max-w-7xl items-center gap-10 px-4 sm:px-6 md:gap-12 lg:grid-cols-[1.05fr_1fr] lg:gap-6 lg:px-8">
         <div className="relative z-10">
           <p data-hero="eyebrow" className="mb-6 inline-flex items-center gap-2 rounded-full glass px-3.5 py-1.5 text-xs text-[var(--text-muted)]">
             <span className="relative flex h-2 w-2" aria-hidden="true">
@@ -81,7 +81,7 @@ export default function Hero() {
           <p className="mt-6 font-mono text-sm tracking-wide text-sky-300/90 sm:text-base" data-hero="copy">
             {profile.title}
           </p>
-          <p className="mt-5 max-w-xl text-lg leading-relaxed text-[var(--text)]/90">{profile.intro}</p>
+          <p className="mt-5 max-w-xl text-base leading-relaxed text-[var(--text)]/90 sm:text-lg">{profile.intro}</p>
           <p className="mt-3 max-w-xl text-base leading-relaxed text-[var(--text-muted)]">{profile.detail}</p>
 
           <div className="mt-9 flex flex-wrap items-center gap-3" data-hero="actions">
@@ -107,12 +107,12 @@ export default function Hero() {
 
           <div className="mt-6 flex items-center gap-4 text-[var(--text-muted)]">
             {profile.linkedin ? (
-              <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm hover:text-sky-300">
+              <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-2 text-sm hover:text-sky-300">
                 <LinkedinIcon className="h-4 w-4" aria-hidden="true" /> LinkedIn
               </a>
             ) : null}
             {profile.github ? (
-              <a href={profile.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm hover:text-sky-300">
+              <a href={profile.github} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-2 text-sm hover:text-sky-300">
                 <GithubIcon className="h-4 w-4" aria-hidden="true" /> GitHub
               </a>
             ) : null}
@@ -125,7 +125,7 @@ export default function Hero() {
         <div
           data-hero="visual"
           data-desktop-3d
-          className="relative h-[420px] w-full sm:h-[520px] lg:absolute lg:inset-y-0 lg:right-0 lg:left-[50%] lg:h-auto lg:w-auto lg:[mask-image:linear-gradient(to_right,transparent,#000_16%)]"
+          className="relative h-[var(--m-visual-h)] w-full sm:h-[520px] lg:absolute lg:inset-y-0 lg:right-0 lg:left-[50%] lg:h-auto lg:w-auto lg:[mask-image:linear-gradient(to_right,transparent,#000_16%)]"
         >
           {mounted3D ? (
             <ErrorBoundary fallback={<HeroFallback />}>
