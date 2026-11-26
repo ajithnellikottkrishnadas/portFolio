@@ -1,0 +1,459 @@
+/* Desktop architecture. Everything sits in the wide-screen query, so phones keep the mobile view. */
+@media (min-width: 1024px) {
+  .aw {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .aw-top {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+  .aw-kicker {
+    margin: 0 0 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #7dd3fc;
+  }
+  .aw-lede {
+    margin: 0;
+    max-width: 52ch;
+    color: var(--text-muted);
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  /* Segmented control shared by the flow switch and the detail switch. */
+  .aw-seg {
+    display: inline-flex;
+    padding: 4px;
+    gap: 4px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.03);
+  }
+  .aw-seg button {
+    min-height: 2.5rem;
+    padding: 0 1.1rem;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .aw-seg button:hover {
+    color: var(--text);
+  }
+  .aw-seg button[aria-pressed='true'] {
+    background: linear-gradient(90deg, rgba(56, 189, 248, 0.9), rgba(139, 92, 246, 0.9));
+    color: #fff;
+  }
+
+  .aw-main {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(300px, 1fr);
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  /* Diagram canvas */
+  .aw-canvas {
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    background: rgba(5, 8, 22, 0.55);
+    padding: 1rem 1rem 1.25rem;
+    display: grid;
+    gap: 1rem;
+  }
+  .aw-canvas-bar {
+    display: flex;
+    justify-content: center;
+  }
+  .aw-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .aw-chips button {
+    min-height: 2.25rem;
+    padding: 0 0.85rem;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--text-muted);
+    font-size: 0.8125rem;
+    cursor: pointer;
+  }
+  .aw-chips button[aria-pressed='true'] {
+    color: var(--text);
+    border-color: rgba(56, 189, 248, 0.6);
+    background: rgba(56, 189, 248, 0.12);
+  }
+  .aw-diagram {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 480px;
+  }
+  .aw-diagram svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .aw-legend {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem 1.1rem;
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+  }
+  .aw-legend li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .aw-legend span {
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 3px;
+    display: inline-block;
+  }
+
+  /* Diagram internals */
+  .aw-box-outside {
+    fill: rgba(148, 163, 184, 0.05);
+    stroke: rgba(148, 163, 184, 0.45);
+    stroke-dasharray: 5 4;
+  }
+  .aw-box-cloud {
+    fill: rgba(56, 189, 248, 0.04);
+    stroke: rgba(56, 189, 248, 0.55);
+    stroke-width: 1.5;
+  }
+  .aw-box-vpc {
+    fill: rgba(34, 197, 94, 0.05);
+    stroke: rgba(74, 222, 128, 0.6);
+    stroke-dasharray: 6 4;
+  }
+  .aw-box-az {
+    fill: rgba(255, 255, 255, 0.02);
+    stroke: rgba(148, 163, 255, 0.35);
+    stroke-dasharray: 3 3;
+  }
+  .aw-subnet-public {
+    fill: rgba(74, 222, 128, 0.12);
+    stroke: rgba(74, 222, 128, 0.45);
+  }
+  .aw-subnet-private {
+    fill: rgba(56, 189, 248, 0.1);
+    stroke: rgba(56, 189, 248, 0.4);
+  }
+  .aw-label {
+    font-size: 12px;
+    font-weight: 600;
+    fill: var(--text);
+  }
+  .aw-label-green {
+    fill: #86efac;
+  }
+  .aw-sub {
+    font-size: 11px;
+    fill: var(--text-muted);
+  }
+  .aw-path {
+    fill: none;
+    stroke: rgba(226, 232, 240, 0.55);
+    stroke-width: 1.6;
+    color: rgba(226, 232, 240, 0.7);
+    transition: stroke 0.25s ease, opacity 0.25s ease;
+  }
+  .aw-path.is-dashed {
+    stroke-dasharray: 4 3;
+  }
+  .aw-path.is-sec {
+    stroke: rgba(252, 211, 77, 0.7);
+    color: rgba(252, 211, 77, 0.8);
+  }
+  .aw-path.is-release {
+    stroke: rgba(52, 211, 153, 0.7);
+    color: rgba(52, 211, 153, 0.85);
+  }
+  .aw-path.is-lit {
+    stroke: #38bdf8;
+    stroke-width: 2.6;
+    color: #38bdf8;
+  }
+  .aw-node {
+    cursor: pointer;
+    transition: opacity 0.25s ease;
+  }
+  .aw-node:hover .aw-node-box {
+    stroke-width: 2;
+  }
+  .aw-node.is-dim {
+    opacity: 0.32;
+  }
+  .aw-node-box {
+    stroke-width: 1.2;
+    transition: stroke-width 0.25s ease, filter 0.25s ease;
+  }
+  .aw-node.is-lit .aw-node-box {
+    stroke-width: 2.4;
+    filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.6));
+  }
+  .aw-node-title {
+    font-size: 12px;
+    font-weight: 600;
+    fill: var(--text);
+  }
+  .aw-node-sub {
+    font-size: 10.5px;
+    fill: var(--text-muted);
+  }
+
+  /* Inspector */
+  .aw-inspector {
+    position: sticky;
+    top: 6.5rem;
+    display: grid;
+    gap: 1.25rem;
+  }
+  .aw-now {
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.03);
+    display: grid;
+    gap: 0.9rem;
+  }
+  .aw-now h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    line-height: 1.25;
+    color: var(--text);
+  }
+  .aw-pill {
+    justify-self: start;
+    padding: 0.2rem 0.7rem;
+    border-radius: 999px;
+    border: 1px solid rgba(139, 92, 246, 0.4);
+    background: rgba(139, 92, 246, 0.12);
+    color: #ddd6fe;
+    font-size: 0.75rem;
+  }
+  .aw-text {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+  .aw-link {
+    justify-self: start;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: #7dd3fc;
+    font-size: 0.875rem;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .aw-code {
+    display: block;
+    padding: 0.6rem 0.8rem;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.3);
+    color: var(--text);
+    font-size: 0.8125rem;
+    overflow-wrap: anywhere;
+  }
+  .aw-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .aw-controls button,
+  .aw-now > button.aw-ghost {
+    min-height: 2.5rem;
+  }
+  .aw-ghost,
+  .aw-primary {
+    padding: 0 1rem;
+    border-radius: 999px;
+    font-size: 0.875rem;
+    cursor: pointer;
+  }
+  .aw-ghost {
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text);
+  }
+  .aw-ghost:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+  .aw-primary {
+    border: 0;
+    background: linear-gradient(90deg, rgba(56, 189, 248, 0.9), rgba(139, 92, 246, 0.9));
+    color: #fff;
+  }
+  .aw-now .aw-chips button {
+    min-height: 2.25rem;
+  }
+  .aw-progress {
+    height: 4px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+  }
+  .aw-progress span {
+    display: block;
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #38bdf8, #a78bfa);
+    transition: width 0.4s ease;
+  }
+
+  .aw-steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.4rem;
+  }
+  .aw-steps button {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.7rem 0.9rem;
+    border-radius: 14px;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease;
+  }
+  .aw-steps button:hover {
+    background: rgba(255, 255, 255, 0.03);
+  }
+  .aw-steps button.is-active {
+    border-color: rgba(56, 189, 248, 0.45);
+    background: rgba(56, 189, 248, 0.07);
+    color: var(--text);
+  }
+  .aw-num {
+    flex: none;
+    width: 1.75rem;
+    height: 1.75rem;
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    font-size: 0.8125rem;
+    font-weight: 600;
+  }
+  .aw-steps button.is-active .aw-num {
+    background: linear-gradient(90deg, #38bdf8, #a78bfa);
+    border-color: transparent;
+    color: #fff;
+  }
+
+  /* Detail area below the diagram */
+  .aw-more {
+    display: grid;
+    gap: 1.5rem;
+    border-top: 1px solid var(--border);
+    padding-top: 2rem;
+  }
+  .aw-more > .aw-seg {
+    justify-self: start;
+  }
+  .aw-cards {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+  .aw-card {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.1rem 1.2rem;
+    background: rgba(255, 255, 255, 0.03);
+    display: grid;
+    gap: 0.5rem;
+    align-content: start;
+  }
+  .aw-card-route {
+    margin: 0;
+    font-weight: 600;
+    color: var(--text);
+    font-size: 0.975rem;
+    line-height: 1.4;
+  }
+  .aw-card-why {
+    margin: 0;
+    font-size: 0.8125rem;
+    color: #7dd3fc;
+  }
+  .aw-groups {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+  }
+  .aw-group {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.1rem 1.2rem;
+    background: rgba(255, 255, 255, 0.02);
+    display: grid;
+    gap: 0.9rem;
+    align-content: start;
+  }
+  .aw-item {
+    display: grid;
+    gap: 0.4rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+  }
+  .aw-item strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+  .aw-item .aw-text {
+    font-size: 0.9375rem;
+  }
+
+  @media (max-width: 1180px) {
+    .aw-main {
+      grid-template-columns: 1fr;
+    }
+    .aw-inspector {
+      position: static;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .aw-path,
+    .aw-node,
+    .aw-node-box,
+    .aw-progress span {
+      transition: none !important;
+    }
+  }
+}

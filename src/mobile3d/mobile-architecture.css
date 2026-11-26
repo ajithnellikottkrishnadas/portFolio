@@ -1,5 +1,5 @@
 /* Mobile architecture. Every rule sits inside the phone and tablet query, so desktop is unaffected. */
-@media (max-width: 899px) {
+@media (min-width: 0px) {
   .m-arch {
     display: grid;
     gap: 1.25rem;
@@ -351,4 +351,49 @@
       transition: none !important;
     }
   }
+}
+
+/* Full detail panels (both screen sizes). */
+.m-arch-full {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.m-arch-full li,
+.m-arch-item {
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  overflow-wrap: anywhere;
+}
+.m-arch-full strong {
+  color: var(--text);
+  font-weight: 600;
+}
+.m-arch-full p {
+  margin: 0;
+}
+.m-arch-item {
+  margin-top: 0.4rem;
+}
+
+/* On wide screens the diagram keeps a phone-like width, centred in the card. */
+.m-arch-diagram {
+  max-width: 440px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.m-arch {
+  max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
 }
