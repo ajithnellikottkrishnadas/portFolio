@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type CSSProperties } from 'react';
+import { useEffect, useRef, type CSSProperties } from 'react';
 import { ecosystemRequestPath, type EcosystemStep } from '../config/profile';
 import { useIsMobile, usePrefersReducedMotion } from './useIsMobile';
 import './mobile3d.css';
@@ -18,7 +18,6 @@ export default function MobileHeroCards() {
   const isMobile = useIsMobile();
   const reduced = usePrefersReducedMotion();
   const stageRef = useRef<HTMLDivElement>(null);
-  const [needsPermission, setNeedsPermission] = useState(false);
 
   // Layers separate as the visitor scrolls away from the top of the page.
   useEffect(() => {
@@ -45,7 +44,8 @@ export default function MobileHeroCards() {
     };
   }, [isMobile, reduced]);
 
-  // Parallax tilt from device orientation. iOS needs a user tap to grant permission first.
+  // Motion tilt starts automatically. Android and most browsers need no permission, so the tilt
+  // runs at once. iOS asks once, so the first tap anywhere on the page requests it, with no button.
   useEffect(() => {
     if (!isMobile || reduced || !('DeviceOrientationEvent' in window)) return;
     const el = stageRef.current;
@@ -57,34 +57,33 @@ export default function MobileHeroCards() {
       el.style.setProperty('--tilt-y', String(clamp(gamma, -25, 25) * 0.4));
       el.style.setProperty('--tilt-x', String(clamp(beta, -25, 25) * -0.3));
     };
-    const DOE = window.DeviceOrientationEvent as unknown as PermissionCapable;
-    if (typeof DOE.requestPermission === 'function') {
-      setNeedsPermission(true);
-      return;
-    }
-    window.addEventListener('deviceorientation', onOrientation);
-    return () => window.removeEventListener('deviceorientation', onOrientation);
-  }, [isMobile, reduced]);
 
-  const enableTilt = async () => {
     const DOE = window.DeviceOrientationEvent as unknown as PermissionCapable;
-    try {
-      const result = await DOE.requestPermission?.();
-      if (result === 'granted') {
-        setNeedsPermission(false);
-        // Re-run the effect path by attaching the listener directly.
-        const el = stageRef.current;
-        if (!el) return;
-        window.addEventListener('deviceorientation', (e) => {
-          const o = e as OrientationEvent;
-          el.style.setProperty('--tilt-y', String(clamp(o.gamma ?? 0, -25, 25) * 0.4));
-          el.style.setProperty('--tilt-x', String(clamp((o.beta ?? 45) - 45, -25, 25) * -0.3));
-        });
-      }
-    } catch {
-      setNeedsPermission(false);
+    if (typeof DOE.requestPermission !== 'function') {
+      window.addEventListener('deviceorientation', onOrientation);
+      return () => window.removeEventListener('deviceorientation', onOrientation);
     }
-  };
+
+    // iOS: request permission on the first tap, then listen.
+    let listening = false;
+    const askOnce = async () => {
+      window.removeEventListener('click', askOnce);
+      try {
+        const result = await DOE.requestPermission?.();
+        if (result === 'granted' && !listening) {
+          listening = true;
+          window.addEventListener('deviceorientation', onOrientation);
+        }
+      } catch {
+        // Permission refused or unavailable: the layers stay still.
+      }
+    };
+    window.addEventListener('click', askOnce);
+    return () => {
+      window.removeEventListener('click', askOnce);
+      window.removeEventListener('deviceorientation', onOrientation);
+    };
+  }, [isMobile, reduced]);
 
   if (!isMobile) return null;
 
@@ -100,11 +99,6 @@ export default function MobileHeroCards() {
           </div>
         ))}
       </div>
-      {needsPermission && (
-        <button type="button" className="m3d-motion-btn" onClick={enableTilt}>
-          Enable motion tilt
-        </button>
-      )}
     </div>
   );
 }
