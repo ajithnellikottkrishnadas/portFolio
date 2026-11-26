@@ -78,7 +78,7 @@ export default function ContactForm() {
     autoComplete?: string,
   ) => {
     const err = errors[id as keyof Errors];
-    const common = `w-full rounded-xl border bg-white/[0.03] px-4 py-3 text-sm text-[var(--text)] placeholder:text-slate-500 outline-none transition focus:border-sky-400/60 focus:bg-white/[0.05] ${
+    const common = `w-full rounded-xl border bg-white/[0.03] px-4 py-3 text-base md:text-sm text-[var(--text)] placeholder:text-slate-500 outline-none transition focus:border-sky-400/60 focus:bg-white/[0.05] ${
       err ? 'border-rose-400/60' : 'border-white/10'
     }`;
     return (
@@ -120,7 +120,7 @@ export default function ContactForm() {
   };
 
   return (
-    <form onSubmit={onSubmit} noValidate className="glass grid gap-5 rounded-2xl p-6 md:p-8" aria-label="Contact form">
+    <form onSubmit={onSubmit} noValidate className="glass grid gap-5 rounded-2xl p-[var(--m-card-p)] md:p-8" aria-label="Contact form">
       {field('name', 'Name', 'text', 'name')}
       {field('email', 'Email', 'email', 'email')}
       {field('message', 'Message', 'textarea')}

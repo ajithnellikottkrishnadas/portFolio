@@ -6,16 +6,16 @@ import TiltCard from './TiltCard';
 
 export default function Education() {
   return (
-    <section id="education" aria-labelledby="edu-title" className="scroll-mt-24 py-24 md:py-32">
+    <section id="education" aria-labelledby="edu-title" className="scroll-mt-24 py-[var(--m-section-y)] lg:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Reveal>
           <SectionHeading eyebrow="06 — Education & Certifications" title="Education and completed training" id="edu-title" />
         </Reveal>
 
-        <div className="mt-14 grid gap-6 lg:grid-cols-2">
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:mt-14">
           <Reveal>
             <TiltCard className="h-full" maxTilt={5}>
-              <article className="glass h-full rounded-2xl p-7">
+              <article className="glass h-full rounded-2xl p-[var(--m-card-p)] lg:p-7">
                 <GraduationCap className="h-8 w-8 text-sky-300" aria-hidden="true" strokeWidth={1.6} />
                 <p className="mt-5 font-mono text-xs uppercase tracking-[0.18em] text-sky-300/90">{education.period}</p>
                 <h3 className="mt-2 text-xl font-semibold text-[var(--text)]">{education.degree}</h3>
@@ -32,7 +32,7 @@ export default function Education() {
             <div className="flex h-full flex-col gap-6">
               {completedCourses.map((c) => (
                 <TiltCard key={c.title} className="h-full" maxTilt={5}>
-                  <article className="glass h-full rounded-2xl p-7">
+                  <article className="glass h-full rounded-2xl p-[var(--m-card-p)] lg:p-7">
                     <Award className="h-8 w-8 text-violet-300" aria-hidden="true" strokeWidth={1.6} />
                     <h3 className="mt-5 text-xl font-semibold text-[var(--text)]">{c.title}</h3>
                     <p className="mt-2 text-[var(--text)]/85">{c.provider}</p>

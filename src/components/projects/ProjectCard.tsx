@@ -24,7 +24,7 @@ function ProjectLink({ href, label, icon }: { href: string; label: string; icon:
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-xs text-[var(--text)] transition-colors hover:border-sky-400/50 hover:bg-sky-400/10"
+      className="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-xs text-[var(--text)] transition-colors hover:border-sky-400/50 hover:bg-sky-400/10"
     >
       {icon}
       {label}
@@ -82,7 +82,7 @@ export default function ProjectCard({ project }: { project: ProjectItem }) {
           </span>
         </div>
 
-        <div className="flex flex-1 flex-col p-6 md:p-7">
+        <div className="flex flex-1 flex-col p-[var(--m-card-p)] lg:p-7">
           <h3 className="text-xl font-semibold leading-snug text-[var(--text)]">{project.title}</h3>
           <p className="mt-3 text-sm leading-relaxed text-[var(--text-muted)]">{project.summary}</p>
 
@@ -105,7 +105,7 @@ export default function ProjectCard({ project }: { project: ProjectItem }) {
             aria-expanded={open}
             aria-controls={detailsId}
             onClick={() => setOpen((v) => !v)}
-            className="mt-6 inline-flex items-center gap-2 self-start text-sm text-sky-300 hover:text-sky-200"
+            className="mt-6 inline-flex min-h-11 items-center gap-2 self-start text-sm text-sky-300 hover:text-sky-200"
           >
             {open ? 'Hide details' : 'Show details'}
             <ChevronDown className={`h-4 w-4 transition-transform ${open ? 'rotate-180' : ''}`} aria-hidden="true" />

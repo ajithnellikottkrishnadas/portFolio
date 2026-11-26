@@ -183,7 +183,7 @@ export default function Ecosystem() {
   const use3D = use3DEnabled();
 
   return (
-    <section id="ecosystem" aria-labelledby="eco-title" className="scroll-mt-24 py-24 md:py-32">
+    <section id="ecosystem" aria-labelledby="eco-title" className="scroll-mt-24 py-[var(--m-section-y)] lg:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Reveal>
           <SectionHeading eyebrow="05 — Architecture Overview" title="Inside the cloud architecture that serves this portfolio" id="eco-title">
@@ -191,8 +191,8 @@ export default function Ecosystem() {
           </SectionHeading>
         </Reveal>
 
-        <TiltCard className="mt-14" maxTilt={3}>
-          <div className="glass relative overflow-hidden rounded-2xl p-6 md:p-10">
+        <TiltCard className="mt-10 lg:mt-14" maxTilt={3}>
+          <div className="glass relative overflow-hidden rounded-2xl p-[var(--m-card-p)] md:p-10">
             <div className="grid-bg absolute inset-0 opacity-60" aria-hidden="true" />
             <div className="relative" data-desktop-3d>
               {use3D ? (

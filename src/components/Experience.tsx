@@ -47,14 +47,14 @@ function TimelineItem({ item, index, defaultOpen }: { item: ExperienceItem; inde
 
       <div className={`pl-10 md:pl-0 ${side ? 'md:col-start-2 md:pl-12' : 'md:col-start-1 md:row-start-1 md:pr-12'}`}>
         <TiltCard maxTilt={4}>
-          <div className="glass rounded-2xl p-5 md:p-6">
+          <div className="glass rounded-2xl p-[var(--m-card-p)] lg:p-6">
             <button
               id={buttonId}
               type="button"
               aria-expanded={open}
               aria-controls={panelId}
               onClick={() => setOpen((v) => !v)}
-              className="flex w-full items-center justify-between gap-4 text-left"
+              className="flex min-h-11 w-full items-center justify-between gap-4 text-left"
             >
               <span className="inline-flex items-center gap-2 text-sm font-medium text-[var(--text)]">
                 <Briefcase className="h-4 w-4 text-sky-300" aria-hidden="true" />
@@ -119,20 +119,20 @@ export default function Experience() {
   }, [reduced]);
 
   return (
-    <section id="experience" aria-labelledby="exp-title" className="scroll-mt-24 py-24 md:py-32">
+    <section id="experience" aria-labelledby="exp-title" className="scroll-mt-24 py-[var(--m-section-y)] lg:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Reveal>
           <SectionHeading eyebrow="03 — Professional Experience" title="Where I have built and operated systems" id="exp-title" />
         </Reveal>
 
-        <div className="relative mt-16">
+        <div className="relative mt-12 lg:mt-16">
           <span
             aria-hidden="true"
             className="absolute bottom-0 left-4 top-0 w-px -translate-x-1/2 bg-white/10 md:left-1/2"
           >
             <span ref={spineRef} className="block h-full w-full bg-gradient-to-b from-sky-400 via-violet-400 to-transparent" />
           </span>
-          <ol ref={listRef} className="space-y-14">
+          <ol ref={listRef} className="space-y-10 lg:space-y-14">
             {experience.map((item, i) => (
               <TimelineItem key={item.id} item={item} index={i} defaultOpen />
             ))}

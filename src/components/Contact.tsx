@@ -36,7 +36,7 @@ function CtaLink({ href, label, icon, sub }: { href: string; label: string; icon
 
 export default function Contact() {
   return (
-    <section id="contact" aria-labelledby="contact-title" className="scroll-mt-24 py-24 md:py-32">
+    <section id="contact" aria-labelledby="contact-title" className="scroll-mt-24 py-[var(--m-section-y)] lg:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Reveal className="grid gap-14 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
           <div>
@@ -50,13 +50,13 @@ export default function Contact() {
             <ul className="mt-10 space-y-4 text-sm text-[var(--text)]">
               <li className="flex items-center gap-3">
                 <Mail className="h-4 w-4 text-sky-300" aria-hidden="true" />
-                <a href={`mailto:${profile.email}`} className="hover:text-sky-300">
+                <a href={`mailto:${profile.email}`} className="inline-flex min-h-11 items-center hover:text-sky-300">
                   {profile.email}
                 </a>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="h-4 w-4 text-sky-300" aria-hidden="true" />
-                <a href={`tel:${profile.phone.replace(/[^+\d]/g, '')}`} className="hover:text-sky-300">
+                <a href={`tel:${profile.phone.replace(/[^+\d]/g, '')}`} className="inline-flex min-h-11 items-center hover:text-sky-300">
                   {profile.phone}
                 </a>
               </li>
@@ -72,7 +72,7 @@ export default function Contact() {
               <CtaLink href={profile.github} label="GitHub" sub="Browse code" icon={<GithubIcon className="h-5 w-5" aria-hidden="true" />} />
             </div>
 
-            <Lazy3D className="mt-6 h-[220px]" fallback={null}>
+            <Lazy3D className="mt-6 hidden h-[220px] min-[900px]:block" fallback={null}>
               <StackScene />
             </Lazy3D>
           </div>

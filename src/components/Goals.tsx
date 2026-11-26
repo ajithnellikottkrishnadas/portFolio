@@ -24,7 +24,7 @@ function StaticOrbit() {
  */
 export default function Goals() {
   return (
-    <section id="goals" aria-labelledby="goals-title" className="scroll-mt-24 py-24 md:py-32">
+    <section id="goals" aria-labelledby="goals-title" className="scroll-mt-24 py-[var(--m-section-y)] lg:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Reveal className="grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
           <div>
@@ -36,7 +36,7 @@ export default function Goals() {
               </p>
             </SectionHeading>
             <div data-desktop-3d>
-              <Lazy3D className="mt-10 h-[340px]" fallback={<StaticOrbit />}>
+              <Lazy3D className="mt-10 h-[var(--m-orbit-h)] md:h-[340px]" fallback={<StaticOrbit />}>
                 <OrbitScene />
               </Lazy3D>
             </div>
